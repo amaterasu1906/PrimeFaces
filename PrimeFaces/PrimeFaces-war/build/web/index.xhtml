@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:growl id="messages" />
+            <p:panel id="form-persona">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Nombre"></p:outputLabel>
+                    <p:inputText value="#{personaBean.persona.nombre}" ></p:inputText>
+                    <p:outputLabel value="Edad"></p:outputLabel>
+                    <p:inputText value="#{personaBean.persona.edad}" ></p:inputText>
+                    <p:outputLabel value="Email"></p:outputLabel>
+                    <p:inputText value="#{personaBean.persona.email}" ></p:inputText>
+                    <p:outputLabel value="Fecha de nacimiento"></p:outputLabel>
+                    <p:calendar value="#{personaBean.persona.fechaNacimiento}"></p:calendar>
+                </p:panelGrid>
+                <p:commandButton type="button" onclick="PF('cd').show()" value="Enviar  datos" ajax="false" />
+            </p:panel>
+            <p:confirmDialog message="Esta seguro que quiere enviarlos"
+                             header="Enviar información" severity="alert" 	 	 
+                             widgetVar="cd"
+                             >		 	 	 	 	
+                <p:commandButton actionListener="#{personaBean.addPersona(personaBean.persona)}" value="Si" update="@form @(#panel-personas)" oncomplete="PF('cd').hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                <p:commandButton value="No" onclick="PF('cd').hide();" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+            </p:confirmDialog>
+        </h:form>
+        <h:panelGroup id="panel-personas">
+            <ui:insert name="tabla-personas" >
+                <ui:include src="include/commonTable.xhtml">
+                    <ui:param name="tagLine" value="Tabla de personas" />
+                </ui:include>
+            </ui:insert>
+        </h:panelGroup>
+    </h:body>
+</html>
+
